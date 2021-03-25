@@ -32,10 +32,16 @@ module.exports = Router()
   
   
   .put('/:id', async (req, res, next) => {
-
+      Order
+        .update(req.body.quantity, req.params.id)
+        .then(orders => res.send(orders))
+        .catch(next)
   })
   
   
   .delete('/:id', async (req, res, next) => {
-    
+      Order
+        .deleteItem(req.params.id)
+        .then(orders => res.send(orders))
+        .catch(next)
   });
