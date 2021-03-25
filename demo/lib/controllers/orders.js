@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const Order = require('../models/Order');
 const OrderService = require('../services/OrderService');
-
+const OrderUpdate = require('../services/OrderUpdate');
+const OrderDelete = require('../services/OrderDelete')
 
 module.exports = Router()
   .post('/', async (req, res, next) => {
@@ -25,23 +26,32 @@ module.exports = Router()
   
   .get('/:id', async (req, res, next) => {
       Order
-      .findById(req.params.id)
-      .then(orders => res.send(orders))
-      .catch(next)
+    .findById(req.params.id)
+     .then(orders => res.send(orders))
+     .catch(next)
+
+
+     
   })
   
   
   .put('/:id', async (req, res, next) => {
-      Order
-        .update(req.body.quantity, req.params.id)
+      OrderUpdate
+        .update(req.body, req.params)
         .then(orders => res.send(orders))
         .catch(next)
+  //   try {
+  //    const order = await OrderUpdate.create(req.body, req.params);
+  //    res.send(order);
+  //  } catch (err) {
+   //  next(err);
+ // }
   })
   
   
   .delete('/:id', async (req, res, next) => {
-      Order
-        .deleteItem(req.params.id)
+      OrderDelete
+        .deleteItem(req.params)
         .then(orders => res.send(orders))
         .catch(next)
   });
